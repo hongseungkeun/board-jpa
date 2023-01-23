@@ -12,18 +12,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CustomException.class)
     protected ResponseEntity<ErrorResponse> handleCustomException(final CustomException e){
         ErrorResponse errorResponse = new ErrorResponse(e.getErrorCode().getStatus(), e.getErrorCode().getMessage());
-        return ResponseEntity.status(errorResponse.httpStatus()).body(errorResponse);
+        return ResponseEntity.status(errorResponse.httpStatus())
+                .body(errorResponse);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     protected ResponseEntity<ErrorResponse> handleIllegalArgumentException(final IllegalArgumentException e){
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
-        return ResponseEntity.status(errorResponse.httpStatus()).body(errorResponse);
+        return ResponseEntity.status(errorResponse.httpStatus())
+                .body(errorResponse);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(final MethodArgumentNotValidException e){
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
-        return ResponseEntity.status(errorResponse.httpStatus()).body(errorResponse);
+        return ResponseEntity.status(errorResponse.httpStatus())
+                .body(errorResponse);
     }
 }

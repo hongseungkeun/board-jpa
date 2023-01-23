@@ -27,8 +27,7 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostResponse> getPosts(Pageable pageable){
         Page<Post> posts = postRepository.findAll(pageable);
-        return posts
-                .stream()
+        return posts.stream()
                 .map(Post::toPostResponse)
                 .toList();
     }
@@ -40,7 +39,8 @@ public class PostService {
 
     @Transactional
     public Long createPost(CreatePostRequest request){
-        User user = userRepository.findById(request.id()).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        User user = userRepository.findById(request.id())
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         Post post = postRepository.save(request.toPost(user));
         return post.getId();
     }
@@ -54,6 +54,7 @@ public class PostService {
     }
 
     public Post findPostById(Long id){
-        return postRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
+        return postRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
     }
 }
