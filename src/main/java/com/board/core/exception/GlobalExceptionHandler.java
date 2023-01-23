@@ -29,4 +29,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(errorResponse.httpStatus())
                 .body(errorResponse);
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    protected ResponseEntity<ErrorResponse> handleRuntimeException(final RuntimeException e){
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        return ResponseEntity.status(errorResponse.httpStatus())
+                .body(errorResponse);
+    }
+
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<ErrorResponse> handleException(final Exception e){
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        return ResponseEntity.status(errorResponse.httpStatus())
+                .body(errorResponse);
+    }
 }
