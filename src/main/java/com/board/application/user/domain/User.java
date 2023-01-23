@@ -47,10 +47,13 @@ public class User extends BaseEntity {
     protected User() {
     }
 
+    public User(String name, String hobby, int age) {
+        this(null, name,hobby,age);
+    }
+
     public User(Long id, String name, String hobby, int age) {
-        Assert.notNull(name, "name must not be null");
-        Assert.hasText(name, "name must be at least 0 character long");
-        Assert.isTrue(age>0, "age must not be below 0");
+        validateName(name);
+        validateAge(age);
 
         this.id = id;
         this.name = name;
@@ -58,13 +61,12 @@ public class User extends BaseEntity {
         this.age = age;
     }
 
-    public User(String name, String hobby, int age) {
+    private void validateName(String name) {
         Assert.notNull(name, "name must not be null");
         Assert.hasText(name, "name must be at least 0 character long");
-        Assert.isTrue(age>0, "age must not be below 0");
+    }
 
-        this.name = name;
-        this.hobby = hobby;
-        this.age = age;
+    private void validateAge(int age) {
+        Assert.isTrue(age>0, "age must not be below 0");
     }
 }

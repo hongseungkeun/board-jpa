@@ -26,22 +26,12 @@ public class Post extends BaseEntity {
     }
 
     public Post(String title, String content, User user) {
-        Assert.notNull(title, "title must not be null");
-        Assert.hasText(title, "title must be at least 0 character long");
-        Assert.notNull(content, "content must not be null");
-        Assert.hasText(content, "content must be at least 0 character long");
-
-        this.title = title;
-        this.content = content;
-        this.user = user;
-        this.createdBy(user.getName());
+        this(null, title, content, user);
     }
 
     public Post(Long id, String title, String content, User user) {
-        Assert.notNull(title, "title must not be null");
-        Assert.hasText(title, "title must be at least 0 character long");
-        Assert.notNull(content, "content must not be null");
-        Assert.hasText(content, "content must be at least 0 character long");
+        validateTitle(title);
+        validateContent(content);
 
         this.id = id;
         this.title = title;
@@ -66,12 +56,22 @@ public class Post extends BaseEntity {
         return user;
     }
 
-    public void updatePost(String title, String content){
+    public void updatePost(String title, String content) {
         this.title = title;
         this.content = content;
     }
 
-    public PostResponse toPostResponse(){
+    public PostResponse toPostResponse() {
         return new PostResponse(this.title, this.content, this.getCreated_at(), this.getCreated_by());
+    }
+
+    private void validateTitle(String title) {
+        Assert.notNull(title, "title must not be null");
+        Assert.hasText(title, "title must be at least 0 character long");
+    }
+
+    private void validateContent(String content) {
+        Assert.notNull(content, "content must not be null");
+        Assert.hasText(content, "content must be at least 0 character long");
     }
 }
