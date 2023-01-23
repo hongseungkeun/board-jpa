@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record CreateUserRequest(@NotBlank String name, String hobby, @NotNull Integer age) {
-    public User toEntity(){
+    public User toUser(){
         return new User(this.name, this.hobby, this.age);
     }
 }
