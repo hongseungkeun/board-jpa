@@ -77,7 +77,7 @@ public class PostControllerTest {
     void updatePostTest() throws Exception {
         UpdatePostRequest updatePostRequest = new UpdatePostRequest("제목3", "안녕하세요 반갑습니다");
 
-        mockMvc.perform(put("/posts/2")
+        mockMvc.perform(patch("/posts/2")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatePostRequest)))
                 .andDo(print())
