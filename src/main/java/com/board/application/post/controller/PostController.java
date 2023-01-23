@@ -47,7 +47,7 @@ public class PostController {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<PostResponse> updatePost(@PathVariable Long id, @Valid @RequestBody UpdatePostRequest request){
         PostResponse postResponse = postService.updatePost(id, request);
         return ResponseEntity.ok(postResponse);
