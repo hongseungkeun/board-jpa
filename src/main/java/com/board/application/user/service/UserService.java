@@ -15,7 +15,7 @@ public class UserService {
     }
 
     public void createUser(CreateUserRequest request){
-        User user = request.toEntity();
+        User user = request.toUser();
         userRepository.save(user);
     }
 }
