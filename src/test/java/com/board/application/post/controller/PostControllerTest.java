@@ -44,7 +44,7 @@ public class PostControllerTest {
         postRepository.save(post2);
     }
 
-    @DisplayName("게시글 조회")
+    @DisplayName("게시글을 조회할 수 있다")
     @Test
     void getPostsTest() throws Exception {
         mockMvc.perform(get("/posts"))
@@ -52,7 +52,7 @@ public class PostControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @DisplayName("게시글 단건 조회")
+    @DisplayName("게시글을 단건 조회할 수 있다")
     @Test
     void getPostTest() throws Exception {
         mockMvc.perform(get("/posts/1"))
@@ -60,7 +60,7 @@ public class PostControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @DisplayName("게시글 생성")
+    @DisplayName("게시글을 생성할 수 있다")
     @Test
     void createPostTest() throws Exception {
         CreatePostRequest createPostRequest = new CreatePostRequest("제목3","안녕하세요",1L);
@@ -72,7 +72,7 @@ public class PostControllerTest {
                 .andExpect(status().isCreated());
     }
 
-    @DisplayName("게시글 수정")
+    @DisplayName("게시글을 수정할 수 있다")
     @Test
     void updatePostTest() throws Exception {
         UpdatePostRequest updatePostRequest = new UpdatePostRequest("제목3", "안녕하세요 반갑습니다");

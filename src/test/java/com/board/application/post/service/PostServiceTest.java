@@ -38,7 +38,7 @@ public class PostServiceTest {
     @InjectMocks
     private PostService postService;
 
-    @DisplayName("게시글 페이징 조회")
+    @DisplayName("게시글을 페이징 조회할 수 있다.")
     @Test
     void getPostsTest() {
         User user = new User("홍승근", "취미", 25);
@@ -61,7 +61,7 @@ public class PostServiceTest {
     @DisplayName("게시글 단건 조회시")
     @Nested
     class getPost {
-        @DisplayName("게시물이 없다면 PostNotFoundException 발생")
+        @DisplayName("게시물이 없다면 PostNotFoundException이 발생한다")
         @Test
         void getPostFailureTest() {
             given(postRepository.findById(anyLong())).willThrow(PostNotFoundException.class);
@@ -69,7 +69,7 @@ public class PostServiceTest {
             Assertions.assertThatThrownBy(() -> postService.findPostById(3L)).isInstanceOf(PostNotFoundException.class);
         }
 
-        @DisplayName("게시물이 있다면 해당 게시물 리턴")
+        @DisplayName("게시물이 있다면 해당 게시물을 조회한다")
         @Test
         void getPostSuccessTest() {
             User user = new User(1L, "홍승근", "취미", 25);
@@ -81,7 +81,7 @@ public class PostServiceTest {
         }
     }
 
-    @DisplayName("게시물 생성")
+    @DisplayName("게시물을 생성할 수 있다")
     @Test
     void createPostTest() {
         User user = new User(1L, "홍승근", "취미", 25);
@@ -95,7 +95,7 @@ public class PostServiceTest {
         assertThat(id).isEqualTo(post.getId());
     }
 
-    @DisplayName("게시물 수정")
+    @DisplayName("게시물을 수정할 수 있다")
     @Test
     void updatePostTest() {
         User user = new User(1L, "홍승근", "취미", 25);

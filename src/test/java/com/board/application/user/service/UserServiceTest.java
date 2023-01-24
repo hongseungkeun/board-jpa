@@ -21,7 +21,7 @@ public class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
-    @DisplayName("유저 생성")
+    @DisplayName("유저를 생성할 수 있다")
     @Test
     void createUser(){
         User user = new User(1L, "유저", "테스트",10);

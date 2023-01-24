@@ -38,7 +38,7 @@ public class UserControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @DisplayName("유저 생성 성공")
+    @DisplayName("유저를 생성할 수 있다")
     @Test
     void createUserSuccessTest() throws Exception {
         CreateUserRequest createUserRequest = new CreateUserRequest("홍승근", "운동", 25);
@@ -50,7 +50,7 @@ public class UserControllerTest {
                 .andExpect(status().isCreated());
     }
 
-    @DisplayName("이름이 빈 값인 유저 생성")
+    @DisplayName("이름이 빈 값인 유저는 생성할 수 없다")
     @Test
     void createUserNameNullTest() throws Exception {
         CreateUserRequest createUserRequest = new CreateUserRequest("", "운동", 25);
@@ -62,7 +62,7 @@ public class UserControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @DisplayName("나이가 0인 유저 생성")
+    @DisplayName("나이가 0인 유저는 생성할 수 없다")
     @Test
     void createUserAgeZeroTest() throws Exception {
         CreateUserRequest createUserRequest = new CreateUserRequest("홍승근", "운동", 0);
@@ -74,7 +74,7 @@ public class UserControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @DisplayName("취미가 없는 유저 생성")
+    @DisplayName("취미가 없는 유저는 생성할 수 있다")
     @Test
     void createUserHobbyNullTest() throws Exception {
         CreateUserRequest createUserRequest = new CreateUserRequest("홍승근", null, 25);
