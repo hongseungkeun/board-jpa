@@ -18,8 +18,6 @@ public class PostTest {
         User user = new User("홍승근", "취미", 25);
 
         assertThrows(IllegalArgumentException.class, () -> new Post(title, "안녕하세요", user));
-        assertThrows(IllegalArgumentException.class, () -> new Post(title, "안녕하세요", user));
-        assertThrows(IllegalArgumentException.class, () -> new Post(title, "안녕하세요", user));
     }
 
     @DisplayName("글은 빈값일 수 없다")
@@ -28,8 +26,6 @@ public class PostTest {
     void contentCannotNull(String content){
         User user = new User("홍승근", "취미", 25);
 
-        assertThrows(IllegalArgumentException.class, () -> new Post("제목", content, user));
-        assertThrows(IllegalArgumentException.class, () -> new Post("제목", content, user));
         assertThrows(IllegalArgumentException.class, () -> new Post("제목", content, user));
     }
 
