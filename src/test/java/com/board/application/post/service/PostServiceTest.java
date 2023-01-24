@@ -61,7 +61,7 @@ public class PostServiceTest {
     @DisplayName("게시글 단건 조회시")
     @Nested
     class getPost {
-        @DisplayName("게시물이 없다면 PostNotFoundException이 발생한다")
+        @DisplayName("게시물이 없다면 PostNotFoundException 발생")
         @Test
         void getPostFailureTest() {
             given(postRepository.findById(anyLong())).willThrow(PostNotFoundException.class);
