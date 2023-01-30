@@ -22,6 +22,14 @@ public class Post extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public void addUser(User user) {
+        if (this.user != null) {
+            this.user.getPosts().remove(this);
+        }
+        this.user = user;
+        user.getPosts().add(this);
+    }
+
     protected Post() {
     }
 
@@ -36,7 +44,7 @@ public class Post extends BaseEntity {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.user = user;
+        addUser(user);
         this.createdBy(user.getName());
     }
 

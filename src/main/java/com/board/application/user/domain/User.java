@@ -45,6 +45,10 @@ public class User extends BaseEntity {
         return age;
     }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
     protected User() {
     }
 
