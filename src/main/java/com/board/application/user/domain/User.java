@@ -2,6 +2,8 @@ package com.board.application.user.domain;
 
 import com.board.application.post.domain.Post;
 import com.board.core.domain.BaseEntity;
+import com.board.core.exception.CustomException;
+import com.board.core.exception.ErrorCode;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -25,6 +27,10 @@ public class User extends BaseEntity {
     private String hobby;
     @Column(nullable = false)
     private Integer age;
+    @Column(unique = true, nullable = false)
+    private String email;
+    @Column(nullable = false)
+    private String password;
 
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
@@ -45,6 +51,14 @@ public class User extends BaseEntity {
         return age;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     public List<Post> getPosts() {
         return posts;
     }
@@ -52,11 +66,11 @@ public class User extends BaseEntity {
     protected User() {
     }
 
-    public User(String name, String hobby, int age) {
-        this(null, name,hobby,age);
+    public User(String name, String hobby, int age, String email, String password) {
+        this(null, name,hobby,age,email,password);
     }
 
-    public User(Long id, String name, String hobby, int age) {
+    public User(Long id, String name, String hobby, int age, String email, String password) {
         validateName(name);
         validateAge(age);
 
@@ -64,6 +78,8 @@ public class User extends BaseEntity {
         this.name = name;
         this.hobby = hobby;
         this.age = age;
+        this.email = email;
+        this.password = password;
     }
 
     private void validateName(String name) {
@@ -73,5 +89,11 @@ public class User extends BaseEntity {
 
     private void validateAge(int age) {
         Assert.isTrue(age>0, "age must not be below 0");
+    }
+
+    public void isPossibleLogin(String password){
+        if(!this.password.equals(password)){
+            throw new CustomException(ErrorCode.LOGIN_FAILED);
+        }
     }
 }

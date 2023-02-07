@@ -1,6 +1,7 @@
 package com.board.application.user.controller;
 
 import com.board.application.user.dto.CreateUserRequest;
+import com.board.application.user.dto.LoginUserRequest;
 import com.board.application.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -22,5 +23,12 @@ public class UserController {
         userService.createUser(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Void> loginUser(@Valid @RequestBody LoginUserRequest request){
+        userService.loginUser(request);
+
+        return ResponseEntity.ok().build();
     }
 }
