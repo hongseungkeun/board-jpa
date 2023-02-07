@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
@@ -24,14 +25,14 @@ public class PostService {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
     }
-    @Transactional(readOnly = true)
+
     public List<PostResponse> getPosts(Pageable pageable){
         Page<Post> posts = postRepository.findAll(pageable);
         return posts.stream()
                 .map(Post::toPostResponse)
                 .toList();
     }
-    @Transactional(readOnly = true)
+
     public PostResponse getPost(Long id){
         Post post = findPostById(id);
         return post.toPostResponse();
