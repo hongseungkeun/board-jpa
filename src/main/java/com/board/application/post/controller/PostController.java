@@ -17,7 +17,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/posts")
 public class PostController {
-
     private final PostService postService;
 
     public PostController(PostService postService){
