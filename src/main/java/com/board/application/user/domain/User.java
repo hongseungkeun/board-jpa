@@ -71,8 +71,7 @@ public class User extends BaseEntity {
     }
 
     public User(Long id, String name, String hobby, int age, String email, String password) {
-        validateName(name);
-        validateAge(age);
+        validate(name, age);
 
         this.id = id;
         this.name = name;
@@ -80,6 +79,11 @@ public class User extends BaseEntity {
         this.age = age;
         this.email = email;
         this.password = password;
+    }
+
+    private void validate(String name, int age) {
+        validateName(name);
+        validateAge(age);
     }
 
     private void validateName(String name) {
