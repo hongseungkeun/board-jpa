@@ -21,14 +21,23 @@ public class UserService {
 
     @Transactional
     public void createUser(CreateUserRequest request){
+        validEmail(request.email());
         User user = request.toUser();
         userRepository.save(user);
     }
 
-    @Transactional(readOnly = true)
-    public void loginUser(LoginUserRequest request) {
+    @Transactional
+    public Long loginUser(LoginUserRequest request) {
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         user.isPossibleLogin(request.password());
+
+        return user.getId();
+    }
+
+    private void validEmail(String email){
+        if(userRepository.existsByEmail(email)){
+            throw new CustomException(ErrorCode.EXIST_USER);
+        }
     }
 }
