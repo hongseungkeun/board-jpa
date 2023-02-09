@@ -36,7 +36,7 @@ public class PostControllerTest {
 
     @BeforeEach
     void setUp(){
-        User user = new User("홍승근", "취미", 25);
+        User user = new User("홍승근", "취미", 25, "123@123.com", "123123");
         User save = userRepository.save(user);
         Post post1 = new Post("제목1", "안녕하세요", save);
         Post post2 = new Post("제목2", "안녕하세요", save);

@@ -15,7 +15,7 @@ public class PostTest {
     @ParameterizedTest
     @MethodSource("blankOrNullStrings")
     void titleCannotNull(String title) {
-        User user = new User("홍승근", "취미", 25);
+        User user = new User("홍승근", "취미", 25, "123@123.com", "123123");
 
         assertThrows(IllegalArgumentException.class, () -> new Post(title, "안녕하세요", user));
     }
@@ -24,7 +24,7 @@ public class PostTest {
     @ParameterizedTest
     @MethodSource("blankOrNullStrings")
     void contentCannotNull(String content){
-        User user = new User("홍승근", "취미", 25);
+        User user = new User("홍승근", "취미", 25, "123@123.com", "123123");
 
         assertThrows(IllegalArgumentException.class, () -> new Post("제목", content, user));
     }

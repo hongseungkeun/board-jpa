@@ -24,8 +24,8 @@ public class UserServiceTest {
     @DisplayName("유저를 생성할 수 있다")
     @Test
     void createUser(){
-        User user = new User(1L, "유저", "테스트",10);
-        CreateUserRequest request = new CreateUserRequest("유저", "테스트", 10);
+        User user = new User(1L, "유저", "테스트",10, "123@123.com", "123123");
+        CreateUserRequest request = new CreateUserRequest("유저", "테스트", 10, "123@123.com", "123123");
 
         given(userRepository.save(any())).willReturn(user);
 

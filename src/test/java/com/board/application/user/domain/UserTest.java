@@ -15,13 +15,13 @@ class UserTest {
     @ParameterizedTest
     @MethodSource("blankOrNullStrings")
     void NameCannotNull(String name){
-        assertThrows(IllegalArgumentException.class, () -> new User(name, "취미", 25));
+        assertThrows(IllegalArgumentException.class, () -> new User(name, "취미", 25, "123@123.com", "123123"));
     }
 
     @DisplayName("유저의 나이는 0살 이하일 수 없다")
     @Test
     void ageCannotZero(){
-        assertThrows(IllegalArgumentException.class, () -> new User("홍승근", "취미", 0));
+        assertThrows(IllegalArgumentException.class, () -> new User("홍승근", "취미", 0, "123@123.com", "123123"));
     }
 
     static Stream<String> blankOrNullStrings() {

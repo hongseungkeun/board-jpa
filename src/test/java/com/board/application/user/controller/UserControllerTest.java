@@ -27,7 +27,7 @@ public class UserControllerTest {
     @DisplayName("유저를 생성할 수 있다")
     @Test
     void createUserSuccessTest() throws Exception {
-        CreateUserRequest createUserRequest = new CreateUserRequest("홍승근", "운동", 25);
+        CreateUserRequest createUserRequest = new CreateUserRequest("홍승근", "운동", 25, "123@123.com", "123123");
 
         mockMvc.perform(post("/users")
                     .contentType(MediaType.APPLICATION_JSON)
@@ -39,7 +39,7 @@ public class UserControllerTest {
     @DisplayName("이름이 빈 값인 유저는 생성할 수 없다")
     @Test
     void createUserNameNullTest() throws Exception {
-        CreateUserRequest createUserRequest = new CreateUserRequest("", "운동", 25);
+        CreateUserRequest createUserRequest = new CreateUserRequest("", "운동", 25, "123@123.com", "123123");
 
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -51,7 +51,7 @@ public class UserControllerTest {
     @DisplayName("나이가 0인 유저는 생성할 수 없다")
     @Test
     void createUserAgeZeroTest() throws Exception {
-        CreateUserRequest createUserRequest = new CreateUserRequest("홍승근", "운동", 0);
+        CreateUserRequest createUserRequest = new CreateUserRequest("홍승근", "운동", 0, "123@123.com", "123123");
 
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -63,7 +63,7 @@ public class UserControllerTest {
     @DisplayName("취미가 없는 유저는 생성할 수 있다")
     @Test
     void createUserHobbyNullTest() throws Exception {
-        CreateUserRequest createUserRequest = new CreateUserRequest("홍승근", null, 25);
+        CreateUserRequest createUserRequest = new CreateUserRequest("홍승근", null, 25, "123@123.com", "123123");
 
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)

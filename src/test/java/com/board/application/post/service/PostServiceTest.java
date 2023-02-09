@@ -41,8 +41,8 @@ public class PostServiceTest {
 
     @BeforeEach
     void setUp(){
-        samplePost = new Post("제목", "안녕하세요", new User("홍승근", "취미", 25));
-        sampleUserWithId = new User(1L, "홍승근", "취미", 25);
+        samplePost = new Post("제목", "안녕하세요", new User("홍승근", "취미", 25, "123@123.com", "123123"));
+        sampleUserWithId = new User(1L, "홍승근", "취미", 25, "123@123.com", "123123");
         samplePostWithId = new Post(1L, "제목", "안녕하세요", sampleUserWithId);
     }
 
