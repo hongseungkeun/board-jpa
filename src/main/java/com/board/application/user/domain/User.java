@@ -60,7 +60,7 @@ public class User extends BaseEntity {
     }
 
     public List<Post> getPosts() {
-        return posts;
+        return new ArrayList<>(posts);
     }
 
     protected User() {
