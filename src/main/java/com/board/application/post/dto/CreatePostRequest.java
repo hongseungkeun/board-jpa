@@ -5,7 +5,7 @@ import com.board.application.user.domain.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record CreatePostRequest(@NotBlank String title, @NotBlank String content, @NotNull Long id) {
+public record CreatePostRequest(@NotBlank String title, @NotBlank String content) {
     public Post toPost(User user){
         return new Post(this.title, this.content, user);
     }
