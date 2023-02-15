@@ -4,6 +4,7 @@ import com.board.application.post.dto.CreatePostRequest;
 import com.board.application.post.dto.PostResponse;
 import com.board.application.post.dto.UpdatePostRequest;
 import com.board.application.post.service.PostService;
+import com.board.core.annotation.LoginId;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -36,19 +37,27 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPost(@Valid @RequestBody CreatePostRequest request){
-        Long userId = postService.createPost(request);
+    public ResponseEntity<Void> createPost(@Valid @RequestBody CreatePostRequest request, @LoginId Long userId){
+        Long postId = postService.createPost(request, userId);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(userId)
+                .buildAndExpand(postId)
                 .toUri();
 
         return ResponseEntity.created(location).build();
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<PostResponse> updatePost(@PathVariable Long id, @Valid @RequestBody UpdatePostRequest request){
-        PostResponse postResponse = postService.updatePost(id, request);
+    public ResponseEntity<PostResponse> updatePost(@PathVariable Long id, @Valid @RequestBody UpdatePostRequest request,
+                                                   @LoginId Long userId){
+        PostResponse postResponse = postService.updatePost(id, request, userId);
         return ResponseEntity.ok(postResponse);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Long id, @LoginId Long userId){
+        postService.deletePost(id, userId);
+
+        return ResponseEntity.noContent().build();
     }
 }
