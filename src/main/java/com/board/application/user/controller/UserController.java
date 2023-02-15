@@ -3,6 +3,8 @@ package com.board.application.user.controller;
 import com.board.application.user.dto.CreateUserRequest;
 import com.board.application.user.dto.LoginUserRequest;
 import com.board.application.user.service.UserService;
+import com.board.core.util.SessionUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-
     public UserController(UserService userService){
         this.userService = userService;
     }
@@ -27,16 +28,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Void> loginUser(@Valid @RequestBody LoginUserRequest request, HttpSession session) {
+    public ResponseEntity<Void> loginUser(@Valid @RequestBody LoginUserRequest request, HttpServletRequest httpServletRequest) {
         Long id = userService.loginUser(request);
-        session.setAttribute("SESSION-KEY", id);
+        SessionUtil.createSession(id, httpServletRequest);
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logoutUser(HttpSession session) {
-        session.invalidate();
+        SessionUtil.invalidSession(session);
 
         return ResponseEntity.ok().build();
     }
