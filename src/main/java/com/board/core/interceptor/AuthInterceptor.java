@@ -1,7 +1,7 @@
 package com.board.core.interceptor;
 
 import com.board.core.exception.CustomException;
-import com.board.core.exception.ErrorCode;
+import com.board.core.exception.error.ErrorCode;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;

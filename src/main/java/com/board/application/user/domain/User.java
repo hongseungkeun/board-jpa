@@ -3,7 +3,7 @@ package com.board.application.user.domain;
 import com.board.application.post.domain.Post;
 import com.board.core.domain.BaseEntity;
 import com.board.core.exception.CustomException;
-import com.board.core.exception.ErrorCode;
+import com.board.core.exception.error.ErrorCode;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;

@@ -5,7 +5,7 @@ import com.board.application.user.dto.CreateUserRequest;
 import com.board.application.user.dto.LoginUserRequest;
 import com.board.application.user.repository.UserRepository;
 import com.board.core.exception.CustomException;
-import com.board.core.exception.ErrorCode;
+import com.board.core.exception.error.ErrorCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,14 +22,15 @@ public class UserService {
     @Transactional
     public void createUser(CreateUserRequest request){
         validEmail(request.email());
+
         User user = request.toUser();
         userRepository.save(user);
     }
 
-    @Transactional
     public Long loginUser(LoginUserRequest request) {
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
         user.isPossibleLogin(request.password());
 
         return user.getId();
