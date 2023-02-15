@@ -8,7 +8,7 @@ import com.board.application.post.repository.PostRepository;
 import com.board.application.user.domain.User;
 import com.board.application.user.repository.UserRepository;
 import com.board.core.exception.CustomException;
-import com.board.core.exception.ErrorCode;
+import com.board.core.exception.error.ErrorCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,6 +28,7 @@ public class PostService {
 
     public List<PostResponse> getPosts(Pageable pageable){
         Page<Post> posts = postRepository.findAll(pageable);
+
         return posts.stream()
                 .map(Post::toPostResponse)
                 .toList();
@@ -35,27 +36,49 @@ public class PostService {
 
     public PostResponse getPost(Long id){
         Post post = findPostById(id);
+
         return post.toPostResponse();
     }
 
     @Transactional
-    public Long createPost(CreatePostRequest request){
-        User user = userRepository.findById(request.id())
+    public Long createPost(CreatePostRequest request, Long id){
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
         Post post = postRepository.save(request.toPost(user));
+
         return post.getId();
     }
 
     @Transactional
-    public PostResponse updatePost(Long id, UpdatePostRequest request){
+    public PostResponse updatePost(Long id, UpdatePostRequest request, Long userId){
         Post post = findPostById(id);
+
+        validUser(post, userId);
+
         post.updatePost(request.title(), request.content());
+        postRepository.save(post);
 
         return post.toPostResponse();
+    }
+
+    @Transactional
+    public void deletePost(Long id, Long userId) {
+        Post post = findPostById(id);
+
+        validUser(post, userId);
+
+        postRepository.delete(post);
     }
 
     public Post findPostById(Long id){
         return postRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
+    }
+
+    private void validUser(Post post, Long userId){
+        if(!post.getUser().getId().equals(userId)){
+            throw new CustomException(ErrorCode.AUTH_FAILED);
+        }
     }
 }
