@@ -16,12 +16,10 @@ public class CustomArgumentResolver implements HandlerMethodArgumentResolver {
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory){
         HttpServletRequest httpServletRequest = (HttpServletRequest) webRequest.getNativeRequest();
-        HttpSession session = httpServletRequest.getSession(false);
+        HttpSession session = httpServletRequest.getSession();
 
-        Long userId = (Long) session.getAttribute("SESSION-KEY");
-
-        return userId;
+        return session.getAttribute("SESSION-KEY");
     }
 }
