@@ -1,8 +1,7 @@
 package com.board.application.post.controller;
 
-import com.board.application.post.dto.CreatePostRequest;
+import com.board.application.post.dto.PostRequest;
 import com.board.application.post.dto.PostResponse;
-import com.board.application.post.dto.UpdatePostRequest;
 import com.board.application.post.service.PostService;
 import com.board.core.annotation.LoginId;
 import jakarta.validation.Valid;
@@ -36,8 +35,14 @@ public class PostController {
         return ResponseEntity.ok(post);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<PostResponse>> getPostsBySearchWord(@RequestParam String searchWord, Pageable pageable){
+        List<PostResponse> posts = postService.getPostsBySearchWord(searchWord, pageable);
+        return ResponseEntity.ok(posts);
+    }
+
     @PostMapping
-    public ResponseEntity<Void> createPost(@Valid @RequestBody CreatePostRequest request, @LoginId Long userId){
+    public ResponseEntity<Void> createPost(@Valid @RequestBody PostRequest request, @LoginId Long userId){
         Long postId = postService.createPost(request, userId);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -48,7 +53,7 @@ public class PostController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<PostResponse> updatePost(@PathVariable Long id, @Valid @RequestBody UpdatePostRequest request,
+    public ResponseEntity<PostResponse> updatePost(@PathVariable Long id, @Valid @RequestBody PostRequest request,
                                                    @LoginId Long userId){
         PostResponse postResponse = postService.updatePost(id, request, userId);
         return ResponseEntity.ok(postResponse);

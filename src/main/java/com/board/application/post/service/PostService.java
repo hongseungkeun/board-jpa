@@ -1,9 +1,8 @@
 package com.board.application.post.service;
 
 import com.board.application.post.domain.Post;
-import com.board.application.post.dto.CreatePostRequest;
+import com.board.application.post.dto.PostRequest;
 import com.board.application.post.dto.PostResponse;
-import com.board.application.post.dto.UpdatePostRequest;
 import com.board.application.post.repository.PostRepository;
 import com.board.application.user.domain.User;
 import com.board.application.user.repository.UserRepository;
@@ -34,6 +33,14 @@ public class PostService {
                 .toList();
     }
 
+    public List<PostResponse> getPostsBySearchWord(String searchWord, Pageable pageable) {
+        Page<Post> posts = postRepository.findPostsBySearchWord(searchWord, pageable);
+
+        return posts.stream()
+                .map(Post::toPostResponse)
+                .toList();
+    }
+
     public PostResponse getPost(Long id){
         Post post = findPostById(id);
 
@@ -41,8 +48,8 @@ public class PostService {
     }
 
     @Transactional
-    public Long createPost(CreatePostRequest request, Long id){
-        User user = userRepository.findById(id)
+    public Long createPost(PostRequest request, Long userid){
+        User user = userRepository.findById(userid)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Post post = postRepository.save(request.toPost(user));
@@ -51,7 +58,7 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponse updatePost(Long id, UpdatePostRequest request, Long userId){
+    public PostResponse updatePost(Long id, PostRequest request, Long userId){
         Post post = findPostById(id);
 
         validUser(post, userId);
