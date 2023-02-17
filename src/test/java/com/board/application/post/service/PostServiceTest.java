@@ -1,9 +1,8 @@
 package com.board.application.post.service;
 
 import com.board.application.post.domain.Post;
-import com.board.application.post.dto.CreatePostRequest;
+import com.board.application.post.dto.PostRequest;
 import com.board.application.post.dto.PostResponse;
-import com.board.application.post.dto.UpdatePostRequest;
 import com.board.application.post.repository.PostRepository;
 import com.board.application.user.domain.User;
 import com.board.application.user.repository.UserRepository;
@@ -87,12 +86,12 @@ public class PostServiceTest {
     @DisplayName("게시물을 생성할 수 있다")
     @Test
     void createPostTest() {
-        CreatePostRequest request = new CreatePostRequest("제목", "안녕하세요", 1L);
+        PostRequest request = new PostRequest("제목", "안녕하세요");
 
         given(userRepository.findById(anyLong())).willReturn(Optional.of(sampleUserWithId));
         given(postRepository.save(any())).willReturn(samplePostWithId);
 
-        Long id = postService.createPost(request);
+        Long id = postService.createPost(request, 1L);
 
         assertThat(id).isEqualTo(samplePostWithId.getId());
     }
@@ -100,11 +99,11 @@ public class PostServiceTest {
     @DisplayName("게시물을 수정할 수 있다")
     @Test
     void updatePostTest() {
-        UpdatePostRequest request = new UpdatePostRequest("테스트", "안녕하세요 반갑습니다");
+        PostRequest request = new PostRequest("테스트", "안녕하세요 반갑습니다");
 
         given(postRepository.findById(anyLong())).willReturn(Optional.of(samplePostWithId));
 
-        postService.updatePost(1L, request);
+        postService.updatePost(1L, request, 1L);
 
         assertThat(samplePostWithId.getContent()).isEqualTo(request.content());
     }

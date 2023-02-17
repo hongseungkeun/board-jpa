@@ -1,8 +1,7 @@
 package com.board.application.post.controller;
 
 import com.board.application.post.domain.Post;
-import com.board.application.post.dto.CreatePostRequest;
-import com.board.application.post.dto.UpdatePostRequest;
+import com.board.application.post.dto.PostRequest;
 import com.board.application.post.repository.PostRepository;
 import com.board.application.user.domain.User;
 import com.board.application.user.repository.UserRepository;
@@ -63,7 +62,7 @@ public class PostControllerTest {
     @DisplayName("게시글을 생성할 수 있다")
     @Test
     void createPostTest() throws Exception {
-        CreatePostRequest createPostRequest = new CreatePostRequest("제목3","안녕하세요",1L);
+        PostRequest createPostRequest = new PostRequest("제목3","안녕하세요");
 
         mockMvc.perform(post("/posts")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -75,7 +74,7 @@ public class PostControllerTest {
     @DisplayName("게시글을 수정할 수 있다")
     @Test
     void updatePostTest() throws Exception {
-        UpdatePostRequest updatePostRequest = new UpdatePostRequest("제목3", "안녕하세요 반갑습니다");
+        PostRequest updatePostRequest = new PostRequest("제목3", "안녕하세요 반갑습니다");
 
         mockMvc.perform(patch("/posts/2")
                         .contentType(MediaType.APPLICATION_JSON)
