@@ -30,8 +30,8 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostResponse> getPost(@PathVariable Long id){
-        PostResponse post = postService.getPost(id);
+    public ResponseEntity<PostResponse> getPost(@PathVariable Long postId){
+        PostResponse post = postService.getPost(postId);
         return ResponseEntity.ok(post);
     }
 
@@ -53,15 +53,15 @@ public class PostController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<PostResponse> updatePost(@PathVariable Long id, @Valid @RequestBody PostRequest request,
+    public ResponseEntity<PostResponse> updatePost(@PathVariable Long postId, @Valid @RequestBody PostRequest request,
                                                    @LoginId Long userId){
-        PostResponse postResponse = postService.updatePost(id, request, userId);
+        PostResponse postResponse = postService.updatePost(postId, request, userId);
         return ResponseEntity.ok(postResponse);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long id, @LoginId Long userId){
-        postService.deletePost(id, userId);
+    public ResponseEntity<Void> deletePost(@PathVariable Long postId, @LoginId Long userId){
+        postService.deletePost(postId, userId);
 
         return ResponseEntity.noContent().build();
     }
