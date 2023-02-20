@@ -1,6 +1,6 @@
 package com.board.core.interceptor;
 
-import com.board.core.exception.CustomException;
+import com.board.core.exception.AuthFailedException;
 import com.board.core.exception.error.ErrorCode;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +19,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         if(session == null){
-            throw new CustomException(ErrorCode.REQUIRED_LOGIN);
+            throw new AuthFailedException(ErrorCode.AUTH_FAILED);
         }
 
         return true;

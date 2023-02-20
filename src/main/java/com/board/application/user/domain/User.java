@@ -2,7 +2,7 @@ package com.board.application.user.domain;
 
 import com.board.application.post.domain.Post;
 import com.board.core.domain.BaseEntity;
-import com.board.core.exception.CustomException;
+import com.board.core.exception.LoginFailedException;
 import com.board.core.exception.error.ErrorCode;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -83,7 +83,7 @@ public class User extends BaseEntity {
 
     public void isPossibleLogin(String password){
         if(!this.password.equals(password)){
-            throw new CustomException(ErrorCode.LOGIN_FAILED);
+            throw new LoginFailedException(ErrorCode.LOGIN_FAILED);
         }
     }
 

@@ -6,12 +6,13 @@ import com.board.application.post.dto.PostResponse;
 import com.board.application.post.repository.PostRepository;
 import com.board.application.user.domain.User;
 import com.board.application.user.service.UserService;
-import com.board.core.exception.CustomException;
+import com.board.core.exception.PostNotFoundException;
 import com.board.core.exception.error.ErrorCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -79,6 +80,6 @@ public class PostService {
 
     public Post findPostById(Long postId){
         return postRepository.findById(postId)
-                .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
+                .orElseThrow(() -> new PostNotFoundException(ErrorCode.POST_NOT_FOUND));
     }
 }

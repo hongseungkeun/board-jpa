@@ -4,7 +4,8 @@ import com.board.application.user.domain.User;
 import com.board.application.user.dto.CreateUserRequest;
 import com.board.application.user.dto.LoginUserRequest;
 import com.board.application.user.repository.UserRepository;
-import com.board.core.exception.CustomException;
+import com.board.core.exception.AlreadyExistUserException;
+import com.board.core.exception.UserNotFoundException;
 import com.board.core.exception.error.ErrorCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +30,7 @@ public class UserService {
 
     public Long loginUser(LoginUserRequest request) {
         User user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+                .orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
 
         user.isPossibleLogin(request.password());
 
@@ -38,12 +39,12 @@ public class UserService {
 
     public User findUserById(Long userId){
        return userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+                .orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
     }
 
     private void isExistEmail(String email){
         if(userRepository.existsByEmail(email)){
-            throw new CustomException(ErrorCode.EXIST_USER);
+            throw new AlreadyExistUserException(ErrorCode.ALREADY_EXIST_USER);
         }
     }
 }
