@@ -5,7 +5,7 @@ import com.board.application.post.dto.PostRequest;
 import com.board.application.post.dto.PostResponse;
 import com.board.application.post.repository.PostRepository;
 import com.board.application.user.domain.User;
-import com.board.application.user.repository.UserRepository;
+import com.board.application.user.service.UserService;
 import com.board.core.exception.CustomException;
 import com.board.core.exception.error.ErrorCode;
 import org.springframework.data.domain.Page;
@@ -18,11 +18,11 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class PostService {
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public PostService(PostRepository postRepository, UserRepository userRepository){
+    public PostService(PostRepository postRepository, UserService userService){
         this.postRepository = postRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     public List<PostResponse> getPosts(Pageable pageable){
@@ -41,16 +41,15 @@ public class PostService {
                 .toList();
     }
 
-    public PostResponse getPost(Long id){
-        Post post = findPostById(id);
+    public PostResponse getPost(Long postId){
+        Post post = findPostById(postId);
 
         return post.toPostResponse();
     }
 
     @Transactional
     public Long createPost(PostRequest request, Long userid){
-        User user = userRepository.findById(userid)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        User user = userService.findUserById(userid);
 
         Post post = postRepository.save(request.toPost(user));
 
@@ -58,10 +57,10 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponse updatePost(Long id, PostRequest request, Long userId){
-        Post post = findPostById(id);
+    public PostResponse updatePost(Long postId, PostRequest request, Long userId){
+        Post post = findPostById(postId);
 
-        validUser(post, userId);
+        post.isPossibleCreatePost(userId);
 
         post.updatePost(request.title(), request.content());
         postRepository.save(post);
@@ -70,22 +69,16 @@ public class PostService {
     }
 
     @Transactional
-    public void deletePost(Long id, Long userId) {
-        Post post = findPostById(id);
+    public void deletePost(Long postId, Long userId) {
+        Post post = findPostById(postId);
 
-        validUser(post, userId);
+        post.isPossibleCreatePost(userId);
 
         postRepository.delete(post);
     }
 
-    public Post findPostById(Long id){
-        return postRepository.findById(id)
+    public Post findPostById(Long postId){
+        return postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
-    }
-
-    private void validUser(Post post, Long userId){
-        if(!post.getUser().getId().equals(userId)){
-            throw new CustomException(ErrorCode.AUTH_FAILED);
-        }
     }
 }

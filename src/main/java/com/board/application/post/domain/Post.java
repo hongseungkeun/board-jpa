@@ -3,6 +3,8 @@ package com.board.application.post.domain;
 import com.board.application.post.dto.PostResponse;
 import com.board.application.user.domain.User;
 import com.board.core.domain.BaseEntity;
+import com.board.core.exception.CustomException;
+import com.board.core.exception.error.ErrorCode;
 import jakarta.persistence.*;
 import org.springframework.util.Assert;
 
@@ -71,6 +73,12 @@ public class Post extends BaseEntity {
 
     public PostResponse toPostResponse() {
         return new PostResponse(this.title, this.content, this.getCreated_at(), this.getCreated_by());
+    }
+
+    public void isPossibleCreatePost(Long userId){
+        if(!this.getUser().getId().equals(userId)){
+            throw new CustomException(ErrorCode.LOGIN_FAILED);
+        }
     }
 
     private void validateTitle(String title) {
