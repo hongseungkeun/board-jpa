@@ -37,7 +37,7 @@ public class UserController {
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logoutUser(HttpSession session) {
-        SessionUtil.invalidSession(session);
+        SessionUtil.removeSession(session);
 
         return ResponseEntity.ok().build();
     }

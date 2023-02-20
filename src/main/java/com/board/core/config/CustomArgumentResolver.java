@@ -10,6 +10,9 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 public class CustomArgumentResolver implements HandlerMethodArgumentResolver {
+
+    private static final String SESSION_KEY = "SESSION_KEY";
+
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.hasParameterAnnotation(LoginId.class);
@@ -20,6 +23,6 @@ public class CustomArgumentResolver implements HandlerMethodArgumentResolver {
         HttpServletRequest httpServletRequest = (HttpServletRequest) webRequest.getNativeRequest();
         HttpSession session = httpServletRequest.getSession();
 
-        return session.getAttribute("SESSION-KEY");
+        return session.getAttribute(SESSION_KEY);
     }
 }
