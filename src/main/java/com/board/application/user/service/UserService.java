@@ -21,7 +21,7 @@ public class UserService {
 
     @Transactional
     public void createUser(CreateUserRequest request){
-        validEmail(request.email());
+        isExistEmail(request.email());
 
         User user = request.toUser();
         userRepository.save(user);
@@ -36,7 +36,12 @@ public class UserService {
         return user.getId();
     }
 
-    private void validEmail(String email){
+    public User findUserById(Long userId){
+       return userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+    }
+
+    private void isExistEmail(String email){
         if(userRepository.existsByEmail(email)){
             throw new CustomException(ErrorCode.EXIST_USER);
         }
