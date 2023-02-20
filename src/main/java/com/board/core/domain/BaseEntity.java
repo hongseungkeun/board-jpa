@@ -34,7 +34,6 @@ public abstract class BaseEntity {
     @PrePersist
     public void onPrePersist(){
         this.created_at = LocalDateTime.now()
-                .format(DateTimeFormatter
-                .ofPattern("yyyy-MM-dd HH:mm:ss"));
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }
