@@ -11,7 +11,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 public class CustomArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private static final String SESSION_KEY = "SESSION_KEY";
+    private static final String SESSION_KEY = "SESSION-KEY";
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
