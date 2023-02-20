@@ -81,6 +81,12 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
+    public void isPossibleLogin(String password){
+        if(!this.password.equals(password)){
+            throw new CustomException(ErrorCode.LOGIN_FAILED);
+        }
+    }
+
     private void validate(String name, int age) {
         validateName(name);
         validateAge(age);
@@ -93,11 +99,5 @@ public class User extends BaseEntity {
 
     private void validateAge(int age) {
         Assert.isTrue(age>0, "age must not be below 0");
-    }
-
-    public void isPossibleLogin(String password){
-        if(!this.password.equals(password)){
-            throw new CustomException(ErrorCode.LOGIN_FAILED);
-        }
     }
 }
