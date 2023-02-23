@@ -27,9 +27,9 @@ public class User extends BaseEntity {
     private String hobby;
     @Column(nullable = false)
     private Integer age;
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 20)
     private String email;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private String password;
 
     @OneToMany(mappedBy = "user")
@@ -71,7 +71,7 @@ public class User extends BaseEntity {
     }
 
     public User(Long id, String name, String hobby, int age, String email, String password) {
-        validate(name, age);
+        validate(name, age, email, password);
 
         this.id = id;
         this.name = name;
@@ -87,17 +87,31 @@ public class User extends BaseEntity {
         }
     }
 
-    private void validate(String name, int age) {
+    private void validate(String name, int age, String email, String password) {
         validateName(name);
         validateAge(age);
+        validateEmail(email);
+        validatePassword(password);
     }
 
     private void validateName(String name) {
-        Assert.notNull(name, "name must not be null");
-        Assert.hasText(name, "name must be at least 0 character long");
+        Assert.notNull(name, "이름을 입력해주세요.");
+        Assert.hasText(name, "이름을 한 글자 이상 입력해주세요.");
     }
 
     private void validateAge(int age) {
-        Assert.isTrue(age>0, "age must not be below 0");
+        Assert.isTrue(age>0, "나이를 한 살 이상 입력해주세요.");
+    }
+
+    private void validateEmail(String email) {
+        Assert.notNull(email, "이메일을 입력해주세요.");
+        Assert.hasText(email, "이메일을 한 글자 이상 입력해주세요.");
+        Assert.isTrue(email.length() <= 20, "이메일은 20글자 이상일 수 없습니다.");
+    }
+
+    private void validatePassword(String password) {
+        Assert.notNull(password, "비밀번호를 입력해주세요.");
+        Assert.hasText(password, "비밀번호를 한 글자 이상 입력해주세요.");
+        Assert.isTrue(password.length() <= 20, "비밀번호는 20글자 이상일 수 없습니다.");
     }
 }

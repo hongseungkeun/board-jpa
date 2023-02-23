@@ -82,12 +82,12 @@ public class Post extends BaseEntity {
     }
 
     private void validateTitle(String title) {
-        Assert.notNull(title, "title must not be null");
-        Assert.hasText(title, "title must be at least 0 character long");
+        Assert.notNull(title, "제목을 입력해주세요.");
+        Assert.hasText(title, "제목을 한 글자 이상 입력해주세요.");
     }
 
     private void validateContent(String content) {
-        Assert.notNull(content, "content must not be null");
-        Assert.hasText(content, "content must be at least 0 character long");
+        Assert.notNull(content, "글을 입력해주세요.");
+        Assert.hasText(content, "글을 한 글자 이상 입력해주세요.");
     }
 }
