@@ -58,15 +58,13 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponse updatePost(Long postId, PostRequest request, Long userId){
+    public void updatePost(Long postId, PostRequest request, Long userId){
         Post post = findPostById(postId);
 
         post.isPossibleCreatePost(userId);
 
         post.updatePost(request.title(), request.content());
         postRepository.save(post);
-
-        return post.toPostResponse();
     }
 
     @Transactional
