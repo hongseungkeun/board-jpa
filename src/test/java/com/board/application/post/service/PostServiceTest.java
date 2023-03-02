@@ -5,7 +5,7 @@ import com.board.application.post.dto.PostRequest;
 import com.board.application.post.dto.PostResponse;
 import com.board.application.post.repository.PostRepository;
 import com.board.application.user.domain.User;
-import com.board.application.user.repository.UserRepository;
+import com.board.application.user.service.UserService;
 import com.board.core.exception.PostNotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
@@ -31,7 +31,7 @@ public class PostServiceTest {
     @Mock
     private PostRepository postRepository;
     @Mock
-    private UserRepository userRepository;
+    private UserService userService;
     @InjectMocks
     private PostService postService;
     private Post samplePost;
@@ -88,7 +88,7 @@ public class PostServiceTest {
     void createPostTest() {
         PostRequest request = new PostRequest("제목", "안녕하세요");
 
-        given(userRepository.findById(anyLong())).willReturn(Optional.of(sampleUserWithId));
+        given(userService.findUserById(anyLong())).willReturn(sampleUserWithId);
         given(postRepository.save(any())).willReturn(samplePostWithId);
 
         Long id = postService.createPost(request, 1L);
