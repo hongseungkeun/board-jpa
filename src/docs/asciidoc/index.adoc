@@ -1,0 +1,111 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+= 게시판 API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+== 회원
+
+=== 회원 가입
+
+==== 요청 구조
+include::{snippets}/user-create/http-request.adoc[]
+
+===== 요청 파라미터
+include::{snippets}/user-create/request-fields.adoc[]
+
+==== 응답 구조
+include::{snippets}/user-create/http-response.adoc[]
+
+=== 로그인
+
+==== 요청 구조
+include::{snippets}/user-login/http-request.adoc[]
+
+===== 요청 파라미터
+include::{snippets}/user-login/request-fields.adoc[]
+
+==== 응답 구조
+include::{snippets}/user-login/http-response.adoc[]
+
+== 게시글
+
+=== 게시글 단건 조회
+
+==== 요청 구조
+include::{snippets}/post-get/http-request.adoc[]
+
+===== 요청 파라미터
+include::{snippets}/post-get/path-parameters.adoc[]
+
+==== 응답 구조
+include::{snippets}/post-get/http-response.adoc[]
+
+===== 응답 파라미터
+include::{snippets}/post-get/response-fields.adoc[]
+
+=== 게시글 전체 페이징 조회
+
+==== 요청 구조
+include::{snippets}/post-get-list/http-request.adoc[]
+
+==== 응답 구조
+include::{snippets}/post-get-list/http-response.adoc[]
+
+===== 응답 파라미터
+include::{snippets}/post-get-list/response-fields.adoc[]
+
+=== 게시글 검색 조회
+
+==== 요청 구조
+include::{snippets}/post-get-search/http-request.adoc[]
+
+==== 요청 파라미터
+include::{snippets}/post-get-search/query-parameters.adoc[]
+
+==== 응답 구조
+include::{snippets}/post-get-search/http-response.adoc[]
+
+===== 응답 파라미터
+include::{snippets}/post-get-search/response-fields.adoc[]
+
+=== 게시글 등록
+
+==== 요청 구조
+include::{snippets}/post-create/http-request.adoc[]
+
+===== 요청 파라미터
+include::{snippets}/post-create/request-fields.adoc[]
+
+==== 응답 구조
+include::{snippets}/post-create/http-response.adoc[]
+
+
+=== 게시글 수정
+
+==== 요청 구조
+include::{snippets}/post-update/http-request.adoc[]
+
+===== 요청 파라미터
+include::{snippets}/post-update/path-parameters.adoc[]
+include::{snippets}/post-update/request-fields.adoc[]
+
+==== 응답 구조
+include::{snippets}/post-update/http-response.adoc[]
+
+=== 게시글 삭제
+
+==== 요청 구조
+include::{snippets}/post-delete/http-request.adoc[]
+
+===== 요청 파라미터
+include::{snippets}/post-delete/path-parameters.adoc[]
+
+==== 응답 구조
+include::{snippets}/post-delete/http-response.adoc[]
