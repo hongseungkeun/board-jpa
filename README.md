@@ -17,3 +17,5 @@ jpa로 구현한 board 미션 레포입니다
 - rest-docs를 사용해서 문서화 합니다 (선택사항)
     - rest-docs를 사용한 문서화 + controller단 테스트 코드를 작성해봐요~!
 - ExceptionHandler와 validation을 추가해주세요 (선택사항)
+
+### [RESTDocs API 명세](src/main/resources/static/docs/index.html)
