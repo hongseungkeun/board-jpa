@@ -1,5 +1,6 @@
 package com.board.application.post.domain;
 
+import com.board.application.like.domain.Like;
 import com.board.application.post.dto.PostResponse;
 import com.board.application.user.domain.User;
 import com.board.core.domain.BaseEntity;
@@ -7,6 +8,9 @@ import com.board.core.exception.AuthFailedException;
 import com.board.core.exception.error.ErrorCode;
 import jakarta.persistence.*;
 import org.springframework.util.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -23,6 +27,9 @@ public class Post extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "post")
+    private List<Like> likes = new ArrayList<>();
 
     public void addUser(User user) {
         if (this.user != null) {
@@ -64,6 +71,10 @@ public class Post extends BaseEntity {
 
     public User getUser() {
         return user;
+    }
+
+    public List<Like> getLikes() {
+        return new ArrayList<>(likes);
     }
 
     public void updatePost(String title, String content) {
