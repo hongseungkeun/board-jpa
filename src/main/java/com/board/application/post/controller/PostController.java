@@ -30,8 +30,8 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostResponse> getPost(@PathVariable Long id){
-        PostResponse post = postService.getPost(id);
+    public ResponseEntity<PostResponse> getPostDetail(@PathVariable Long id){
+        PostResponse post = postService.getPostDetail(id);
         return ResponseEntity.ok(post);
     }
 
@@ -63,6 +63,13 @@ public class PostController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Long id, @LoginId Long userId){
         postService.deletePost(id, userId);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/like")
+    public ResponseEntity<Void> AddLike(@PathVariable Long id, @LoginId Long userId){
+        postService.addLike(id, userId);
 
         return ResponseEntity.noContent().build();
     }

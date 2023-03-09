@@ -1,5 +1,7 @@
 package com.board.application.post.service;
 
+import com.board.application.like.domain.Like;
+import com.board.application.like.repository.LikeRepository;
 import com.board.application.post.domain.Post;
 import com.board.application.post.dto.PostRequest;
 import com.board.application.post.dto.PostResponse;
@@ -14,16 +16,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
 public class PostService {
-    private final PostRepository postRepository;
     private final UserService userService;
+    private final PostRepository postRepository;
+    private final LikeRepository likeRepository;
 
-    public PostService(PostRepository postRepository, UserService userService){
+    public PostService(PostRepository postRepository, UserService userService, LikeRepository likeRepository){
         this.postRepository = postRepository;
         this.userService = userService;
+        this.likeRepository = likeRepository;
     }
 
     public List<PostResponse> getPosts(Pageable pageable){
@@ -42,15 +47,15 @@ public class PostService {
                 .toList();
     }
 
-    public PostResponse getPost(Long postId){
+    public PostResponse getPostDetail(Long postId){
         Post post = findPostById(postId);
 
         return post.toPostResponse();
     }
 
     @Transactional
-    public Long createPost(PostRequest request, Long userid){
-        User user = userService.findUserById(userid);
+    public Long createPost(PostRequest request, Long userId){
+        User user = userService.findUserById(userId);
 
         Post post = postRepository.save(request.toPost(user));
 
@@ -74,6 +79,20 @@ public class PostService {
         post.isPossibleCreatePost(userId);
 
         postRepository.delete(post);
+    }
+
+    @Transactional
+    public void addLike(Long postId, Long userId){
+        User user = userService.findUserById(userId);
+        Post post = findPostById(postId);
+
+        Optional<Like> userLikeOfPost = likeRepository.findByUserAndPost(user, post);
+
+        if(userLikeOfPost.isPresent()){
+            likeRepository.delete(userLikeOfPost.get());
+        }else{
+            likeRepository.save(new Like(user, post));
+        }
     }
 
     public Post findPostById(Long postId){
