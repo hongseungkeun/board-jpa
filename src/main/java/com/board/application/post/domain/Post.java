@@ -8,6 +8,9 @@ import com.board.core.exception.error.ErrorCode;
 import jakarta.persistence.*;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "posts")
 public class Post extends BaseEntity {
@@ -23,6 +26,9 @@ public class Post extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "post")
+    private List<Like> likes = new ArrayList<>();
 
     public void addUser(User user) {
         if (this.user != null) {
@@ -66,13 +72,17 @@ public class Post extends BaseEntity {
         return user;
     }
 
+    public List<Like> getLikes() {
+        return new ArrayList<>(likes);
+    }
+
     public void updatePost(String title, String content) {
         this.title = title;
         this.content = content;
     }
 
     public PostResponse toPostResponse() {
-        return new PostResponse(this.title, this.content, this.getCreated_at(), this.getCreated_by());
+        return new PostResponse(this.title, this.content, this.getCreated_at(), this.getCreated_by(), this.likes.size());
     }
 
     public void isPossibleCreatePost(Long userId) {
