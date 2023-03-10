@@ -68,7 +68,8 @@ public class PostControllerTest {
                                 fieldWithPath("title").description("제목"),
                                 fieldWithPath("content").description("내용"),
                                 fieldWithPath("created_at").description("작성 날짜"),
-                                fieldWithPath("created_by").description("작성자")
+                                fieldWithPath("created_by").description("작성자"),
+                                fieldWithPath("likeCount").description("총 좋아요 수")
                         )
                 ));
     }
@@ -89,7 +90,8 @@ public class PostControllerTest {
                                 fieldWithPath("[].title").description("제목"),
                                 fieldWithPath("[].content").description("내용"),
                                 fieldWithPath("[].created_at").description("작성 날짜"),
-                                fieldWithPath("[].created_by").description("작성자")
+                                fieldWithPath("[].created_by").description("작성자"),
+                                fieldWithPath("[].likeCount").description("총 좋아요 수")
                         )
                 ));
     }
@@ -115,7 +117,8 @@ public class PostControllerTest {
                                 fieldWithPath("[].title").description("제목"),
                                 fieldWithPath("[].content").description("내용"),
                                 fieldWithPath("[].created_at").description("작성 날짜"),
-                                fieldWithPath("[].created_by").description("작성자")
+                                fieldWithPath("[].created_by").description("작성자"),
+                                fieldWithPath("[].likeCount").description("총 좋아요 수")
                         )
                 ));
     }
