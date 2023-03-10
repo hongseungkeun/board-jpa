@@ -1,6 +1,5 @@
-package com.board.application.like.domain;
+package com.board.application.post.domain;
 
-import com.board.application.post.domain.Post;
 import com.board.application.user.domain.User;
 import jakarta.persistence.*;
 

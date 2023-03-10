@@ -1,6 +1,6 @@
-package com.board.application.like.repository;
+package com.board.application.post.repository;
 
-import com.board.application.like.domain.Like;
+import com.board.application.post.domain.Like;
 import com.board.application.post.domain.Post;
 import com.board.application.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;

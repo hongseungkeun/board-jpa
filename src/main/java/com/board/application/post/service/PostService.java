@@ -1,7 +1,7 @@
 package com.board.application.post.service;
 
-import com.board.application.like.domain.Like;
-import com.board.application.like.repository.LikeRepository;
+import com.board.application.post.domain.Like;
+import com.board.application.post.repository.LikeRepository;
 import com.board.application.post.domain.Post;
 import com.board.application.post.dto.PostRequest;
 import com.board.application.post.dto.PostResponse;
