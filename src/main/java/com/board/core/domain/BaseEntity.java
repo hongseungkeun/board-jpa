@@ -15,25 +15,25 @@ import java.time.format.DateTimeFormatter;
 public abstract class BaseEntity {
     @CreatedDate
     @Column(updatable = false)
-    private String created_at;
+    private String createdAt;
 
-    private String created_by;
+    private String createdBy;
 
     public String getCreated_at() {
-        return created_at;
+        return createdAt;
     }
 
     public String getCreated_by() {
-        return created_by;
+        return createdBy;
     }
 
     public void createdBy(String name) {
-        this.created_by = name;
+        this.createdBy = name;
     }
 
     @PrePersist
     public void onPrePersist(){
-        this.created_at = LocalDateTime.now()
+        this.createdAt = LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }
