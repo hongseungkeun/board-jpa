@@ -1,6 +1,5 @@
 package com.board.application.post.domain;
 
-import com.board.application.like.domain.Like;
 import com.board.application.post.dto.PostResponse;
 import com.board.application.user.domain.User;
 import com.board.core.domain.BaseEntity;
@@ -83,7 +82,7 @@ public class Post extends BaseEntity {
     }
 
     public PostResponse toPostResponse() {
-        return new PostResponse(this.title, this.content, this.getCreated_at(), this.getCreated_by());
+        return new PostResponse(this.title, this.content, this.getCreated_at(), this.getCreated_by(), this.likes.size());
     }
 
     public void isPossibleCreatePost(Long userId) {
