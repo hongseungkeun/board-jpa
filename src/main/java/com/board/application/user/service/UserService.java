@@ -47,4 +47,9 @@ public class UserService {
             throw new AlreadyExistUserException(ErrorCode.ALREADY_EXIST_USER);
         }
     }
+
+    @Transactional
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
 }
