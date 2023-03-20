@@ -32,7 +32,7 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 
     public Long getId() {
